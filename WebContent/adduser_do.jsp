@@ -1,0 +1,32 @@
+<%@page import="jdbc.AdminOperation"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.util.Map" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注册</title>
+</head>
+<body>
+
+
+	
+	<jsp:useBean id="user1" class="jdbc.AdminOperation" scope="request"/>
+	<jsp:setProperty name="user1" property="*"/> 
+	
+	<%
+	Map<String,String> errs = user1.checkuser();
+	if(errs.size()==0){
+		user1.adduser();
+		response.sendRedirect("index.html");
+	}else{
+		request.setAttribute("errs", errs);
+		request.getRequestDispatcher("adduser.jsp").forward(request, response);
+	}
+ 
+	
+	%>
+</body>
+</html>
